@@ -1,1 +1,1202 @@
 
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ea580c">
+<meta name="description" content="SP DigiNova Tech Pvt. Ltd. प्रस्तुत eGramsuvidha — ग्रामपंचायतींच्या कामकाजासाठी एकात्मिक डिजिटल प्रणाली.">
+<meta property="og:title" content="eGramsuvidha | Digital Catalogue">
+<meta property="og:description" content="ग्रामपंचायतीचे कामकाज आता अधिक सोपे आणि डिजिटल!">
+<meta property="og:type" content="website">
+<title>eGramsuvidha | SP DigiNova Tech Pvt. Ltd.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:"Noto Sans Devanagari",system-ui,sans-serif;
+ background:#f8fafc;
+ color:#172033;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none}
+.orange{background:#ea580c;color:white}
+.orange:hover{background:#c2410c}
+.green{background:#15803d;color:white}
+.green:hover{background:#166534}
+.card{
+ background:white;
+ border:1px solid #e5e7eb;
+ border-radius:16px;
+ padding:20px;
+ box-shadow:0 3px 12px rgba(0,0,0,.035);
+}
+.btn{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ padding:12px 18px;
+ border-radius:10px;
+ font-weight:700;
+ text-align:center;
+ transition:.2s;
+}
+.btn:focus-visible,button:focus-visible,
+a:focus-visible,input:focus-visible,
+textarea:focus-visible{
+ outline:3px solid #fb923c;
+ outline-offset:2px;
+}
+.field{
+ width:100%;
+ padding:12px;
+ border:1px solid #cbd5e1;
+ border-radius:10px;
+ background:white;
+}
+.field:focus{outline:2px solid #fb923c}
+.navbtn{
+ padding:9px 13px;
+ border-radius:9px;
+ font-size:14px;
+ white-space:nowrap;
+}
+.module-icon{
+ width:54px;
+ height:54px;
+ border-radius:14px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#fff3e8;
+ font-size:28px;
+}
+.section-title{
+ font-size:23px;
+ font-weight:800;
+ margin-bottom:16px;
+}
+</style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const {useState}=React;
+
+/* ===================================
+   COMPANY MASTER INFORMATION
+=================================== */
+
+const COMPANY={
+ name:"SP DigiNova Tech Pvt. Ltd.",
+ shortName:"SP DigiNova Tech",
+ tagline:"INNOVATING TODAY. EMPOWERING TOMORROW.",
+
+ product:"eGramsuvidha",
+ productTagline:"Smart Governance. Simple Management.",
+
+ companyWebsite:"https://www.spdiginova.com",
+ productWebsite:"https://www.egramsuvidha.com",
+ loginUrl:"https://egramsuvidha.com/login",
+
+ companyMobile:"8010073707",
+ whatsapp:"8010073707",
+ supportMobile:"9225306185",
+
+ email:"spdiginova@gmail.com",
+
+ address:"",
+ instagram:"",
+ facebook:"",
+ youtube:"",
+ linkedin:"",
+
+ description:
+ "SP DigiNova Tech Pvt. Ltd. ही eGramsuvidha डिजिटल प्रणाली विकसित करणारी कंपनी आहे. ग्रामपंचायतींचे प्रशासकीय, आर्थिक आणि दैनंदिन कामकाज डिजिटल पद्धतीने सुलभ करण्यासाठी eGramsuvidha ही एकात्मिक क्लाउड-आधारित प्रणाली उपलब्ध करून दिली जाते."
+};
+
+/* ===================================
+   PRODUCT CATALOGUE
+=================================== */
+
+const MODULES=[
+ {
+  id:1,
+  name:"ग्रामपंचायत नमुना १ ते ३३",
+  category:"अभिलेखे",
+  icon:"📚",
+  desc:"ग्रामपंचायत दैनंदिन नोंदवह्या, आर्थिक अभिलेखे, नोंदी व अधिकृत नमुन्यांनुसार प्रिंट."
+ },
+ {
+  id:2,
+  name:"नमुना ८ — मिळकत नोंदवही",
+  category:"कर व्यवस्थापन",
+  icon:"🏠",
+  desc:"मिळकत नोंदणी, खातेदार माहिती, बांधकाम प्रकार, क्षेत्रफळ, मूल्यांकन आणि कर आकारणी."
+ },
+ {
+  id:3,
+  name:"नमुना ९ — मागणी नोंदवही",
+  category:"कर व्यवस्थापन",
+  icon:"📋",
+  desc:"ग्रामनिधी व पाणीपट्टी मागणी, मागील थकबाकी, चालू आकारणी, वसुली आणि शिल्लक."
+ },
+ {
+  id:4,
+  name:"नमुना ७ व १० — पावत्या",
+  category:"लेखा",
+  icon:"🧾",
+  desc:"ग्रामपंचायतीच्या जमा व्यवहारांच्या व कर वसुलीच्या पावत्या."
+ },
+ {
+  id:5,
+  name:"नमुना १२ व १९ — खर्च",
+  category:"लेखा",
+  icon:"📑",
+  desc:"निधीनिहाय खर्च व्यवहार, व्हाउचर, संबंधित नोंदी आणि प्रिंट."
+ },
+ {
+  id:6,
+  name:"कर फेरआकारणी",
+  category:"कर व्यवस्थापन",
+  icon:"🏘️",
+  desc:"मिळकतींचे पुनर्मूल्यांकन, बांधकाम तपशील, कर गणना आणि संबंधित अभिलेखे."
+ },
+ {
+  id:7,
+  name:"दाखले व नाहरकत प्रमाणपत्र",
+  category:"नागरिक सेवा",
+  icon:"📜",
+  desc:"ग्रामपंचायत दाखले, नाहरकत प्रमाणपत्रे आणि नागरिक सेवा व्यवस्थापन."
+ },
+ {
+  id:8,
+  name:"विकासकामे व प्रशासकीय मान्यता",
+  category:"विकासकामे",
+  icon:"🏗️",
+  desc:"ग्रामपंचायत विकासकाम प्रस्ताव, अंदाजपत्रक, प्रशासकीय मान्यता व संचिका."
+ },
+ {
+  id:9,
+  name:"१५ वा व १६ वा वित्त आयोग",
+  category:"निधी",
+  icon:"🏦",
+  desc:"वित्त आयोग निधी व्यवस्थापन, प्राप्ती, खर्च आणि संबंधित आर्थिक अहवाल."
+ },
+ {
+  id:10,
+  name:"मासिक व वार्षिक अहवाल",
+  category:"अहवाल",
+  icon:"📊",
+  desc:"मासिक जमा-खर्च विवरणपत्रे, आर्थिक अहवाल आणि वार्षिक विवरणपत्रे."
+ },
+ {
+  id:11,
+  name:"मुख्यमंत्री समृद्ध पंचायतराज अभियान",
+  category:"अभियान",
+  icon:"🏆",
+  desc:"अभियान नियोजन, गुणनिहाय मूल्यमापन, प्रगती आणि अहवाल."
+ },
+ {
+  id:12,
+  name:"ग्रामपंचायत मोबाइल ॲप",
+  category:"डिजिटल सेवा",
+  icon:"📱",
+  desc:"मोबाइलवरून ग्रामपंचायत कामकाज आणि नागरिक सेवा उपलब्ध करून देण्याचे समाधान."
+ }
+];
+
+/* ===================================
+   HELPERS
+=================================== */
+
+const phoneUrl=n=>"tel:+91"+n;
+
+function whatsappUrl(text){
+ return "https://wa.me/91"+COMPANY.whatsapp+
+ "?text="+encodeURIComponent(text);
+}
+
+function openWhatsApp(text){
+ window.open(
+  whatsappUrl(text),
+  "_blank",
+  "noopener,noreferrer"
+ );
+}
+
+function escapeVCard(value){
+ return String(value)
+  .replace(/\\/g,"\\\\")
+  .replace(/\n/g,"\\n")
+  .replace(/,/g,"\\,")
+  .replace(/;/g,"\\;");
+}
+
+function downloadVCard(){
+ const data=[
+  "BEGIN:VCARD",
+  "VERSION:3.0",
+  "FN:"+escapeVCard(COMPANY.name),
+  "ORG:"+escapeVCard(COMPANY.name),
+  "TITLE:eGramsuvidha",
+  "TEL;TYPE=WORK:+91"+COMPANY.companyMobile,
+  "TEL;TYPE=CELL:+91"+COMPANY.supportMobile,
+  "EMAIL:"+COMPANY.email,
+  "URL:"+COMPANY.companyWebsite,
+  "NOTE:"+escapeVCard("Product: "+COMPANY.productWebsite),
+  "END:VCARD"
+ ].join("\r\n");
+
+ const blob=new Blob([data],{
+  type:"text/vcard;charset=utf-8"
+ });
+
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement("a");
+ link.href=url;
+ link.download="SP-DigiNova-Tech.vcf";
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
+
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function localDate(){
+ const d=new Date();
+ const year=d.getFullYear();
+ const month=String(d.getMonth()+1).padStart(2,"0");
+ const day=String(d.getDate()).padStart(2,"0");
+ return year+"-"+month+"-"+day;
+}
+
+/* ===================================
+   MODULE CARD
+=================================== */
+
+function ModuleCard({module,onOpen}){
+ return (
+  <article className="card flex flex-col">
+   <div className="module-icon mb-3" aria-hidden="true">
+    {module.icon}
+   </div>
+
+   <div className="text-xs font-bold text-orange-700 mb-2">
+    {module.category}
+   </div>
+
+   <h3 className="text-lg font-bold mb-2">
+    {module.name}
+   </h3>
+
+   <p className="text-sm text-gray-600 mb-5 flex-1">
+    {module.desc}
+   </p>
+
+   <button
+    type="button"
+    className="btn orange w-full"
+    onClick={onOpen}
+   >
+    अधिक माहिती
+   </button>
+  </article>
+ );
+}
+
+/* ===================================
+   MAIN APPLICATION
+=================================== */
+
+function App(){
+ const [page,setPage]=useState("home");
+ const [selected,setSelected]=useState(null);
+ const [search,setSearch]=useState("");
+ const [category,setCategory]=useState("सर्व");
+
+ const [form,setForm]=useState({
+  name:"",
+  designation:"",
+  gp:"",
+  taluka:"",
+  district:"",
+  mobile:"",
+  date:"",
+  message:""
+ });
+
+ const categories=[
+  "सर्व",
+  ...new Set(MODULES.map(m=>m.category))
+ ];
+
+ const filtered=MODULES.filter(m=>{
+  const matchCategory=
+   category==="सर्व"||m.category===category;
+
+  const matchSearch=
+   (m.name+" "+m.category+" "+m.desc)
+    .toLowerCase()
+    .includes(search.trim().toLowerCase());
+
+  return matchCategory&&matchSearch;
+ });
+
+ const navigate=(target)=>{
+  setPage(target);
+  setSelected(null);
+  window.scrollTo({top:0,behavior:"smooth"});
+ };
+
+ const openModule=(module)=>{
+  setSelected(module);
+  setPage("catalogue");
+  window.scrollTo({top:0,behavior:"smooth"});
+ };
+
+ const updateForm=(key,value)=>{
+  setForm(previous=>({...previous,[key]:value}));
+ };
+
+ const submitEnquiry=()=>{
+  const mobile=form.mobile.trim();
+
+  if(!form.name.trim()||
+     !form.gp.trim()||
+     !/^[6-9]\d{9}$/.test(mobile)){
+   alert("नाव, ग्रामपंचायत आणि योग्य १० अंकी मोबाइल क्रमांक आवश्यक आहेत.");
+   return;
+  }
+
+  if(form.date&&form.date<localDate()){
+   alert("कृपया आजची किंवा पुढील तारीख निवडा.");
+   return;
+  }
+
+  const text=[
+   "*eGramsuvidha - Demo Request*",
+   "",
+   "नाव: "+form.name.trim(),
+   "पदनाम: "+(form.designation||"नमूद नाही"),
+   "ग्रामपंचायत: "+form.gp.trim(),
+   "तालुका: "+(form.taluka||"नमूद नाही"),
+   "जिल्हा: "+(form.district||"नमूद नाही"),
+   "मोबाइल: "+mobile,
+   "डेमो दिनांक: "+(form.date||"नमूद नाही"),
+   "संदेश: "+(form.message||"नमूद नाही")
+  ].join("\n");
+
+  openWhatsApp(text);
+ };
+
+ const catalogueUrl=
+  window.location.origin+window.location.pathname;
+
+ const qrUrl=
+  "https://api.qrserver.com/v1/create-qr-code/"+
+  "?size=300x300&data="+
+  encodeURIComponent(catalogueUrl);
+
+ const share=async()=>{
+  const data={
+   title:"eGramsuvidha Digital Catalogue",
+   text:"SP DigiNova Tech Pvt. Ltd. प्रस्तुत eGramsuvidha",
+   url:catalogueUrl
+  };
+
+  if(navigator.share){
+   try{
+    await navigator.share(data);
+   }catch(error){
+    if(error.name!=="AbortError"){
+     alert("शेअर करता आले नाही.");
+    }
+   }
+  }else{
+   try{
+    await navigator.clipboard.writeText(catalogueUrl);
+    alert("कॅटलॉग लिंक कॉपी झाली.");
+   }catch(error){
+    window.prompt("लिंक कॉपी करा:",catalogueUrl);
+   }
+  }
+ };
+
+ const navItems=[
+  ["home","मुख्य पान"],
+  ["catalogue","सर्व सुविधा"],
+  ["about","कंपनी"],
+  ["demo","डेमो बुकिंग"],
+  ["contact","संपर्क"],
+  ["share","डिजिटल कार्ड"]
+ ];
+
+ return (
+ <div className="min-h-screen pb-20">
+
+  {/* HEADER */}
+  <header className="bg-white border-b sticky top-0 z-20 shadow-sm">
+   <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <button
+     type="button"
+     onClick={()=>navigate("home")}
+     className="text-left"
+    >
+     <div className="text-xl font-extrabold">
+      <span className="text-green-700">eGram</span>
+      <span className="text-orange-600">suvidha</span>
+     </div>
+     <div className="text-xs text-gray-500">
+      {COMPANY.name}
+     </div>
+    </button>
+
+    <a
+     className="btn orange text-sm"
+     href={COMPANY.loginUrl}
+     target="_blank"
+     rel="noopener noreferrer"
+    >
+     Demo Login
+    </a>
+   </div>
+
+   <nav className="max-w-6xl mx-auto px-3 pb-2 flex gap-2 overflow-x-auto">
+    {navItems.map(([id,label])=>(
+     <button
+      type="button"
+      key={id}
+      onClick={()=>navigate(id)}
+      aria-current={page===id?"page":undefined}
+      className={
+       "navbtn "+
+       (page===id
+        ?"bg-orange-100 text-orange-700 font-bold"
+        :"text-gray-600")
+      }
+     >
+      {label}
+     </button>
+    ))}
+   </nav>
+  </header>
+
+  <main className="max-w-6xl mx-auto px-4 py-6">
+
+   {/* HOME */}
+   {page==="home"&&(
+    <>
+     <section className="rounded-2xl bg-gradient-to-br from-orange-100 via-white to-green-50 border p-6 md:p-12">
+      <p className="text-sm font-bold text-orange-700 mb-3">
+       DIGITAL GRAM PANCHAYAT SOLUTION
+      </p>
+
+      <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
+       ग्रामपंचायतीचे कामकाज आता अधिक सोपे आणि डिजिटल!
+      </h1>
+
+      <p className="text-gray-600 mb-6 max-w-2xl">
+       नमुना १ ते ३३, कर आकारणी, फेरआकारणी,
+       दाखले, लेखा, निधी व्यवस्थापन, विकासकामे
+       आणि अहवाल यासाठी एकात्मिक डिजिटल प्रणाली.
+      </p>
+
+      <div className="flex flex-wrap gap-3">
+       <button
+        type="button"
+        className="btn orange"
+        onClick={()=>navigate("catalogue")}
+       >
+        सर्व सुविधा पाहा
+       </button>
+
+       <button
+        type="button"
+        className="btn border border-orange-500 bg-white text-orange-700"
+        onClick={()=>navigate("demo")}
+       >
+        डेमो बुक करा
+       </button>
+      </div>
+     </section>
+
+     <section className="py-8">
+      <h2 className="section-title">आमच्या प्रमुख सुविधा</h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+       {MODULES.slice(0,6).map(m=>(
+        <ModuleCard
+         key={m.id}
+         module={m}
+         onOpen={()=>openModule(m)}
+        />
+       ))}
+      </div>
+
+      <button
+       type="button"
+       className="btn orange mt-5"
+       onClick={()=>navigate("catalogue")}
+      >
+       संपूर्ण कॅटलॉग पाहा
+      </button>
+     </section>
+
+     <section className="card text-center mb-6">
+      <h2 className="section-title">
+       eGramsuvidha प्रत्यक्ष वापरून पाहा
+      </h2>
+
+      <p className="text-gray-600 mb-5">
+       डेमो लॉगिनद्वारे प्रणालीची माहिती घ्या.
+      </p>
+
+      <a
+       className="btn orange"
+       href={COMPANY.loginUrl}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       Live Demo Login
+      </a>
+     </section>
+
+     <section className="card">
+      <h2 className="section-title">थेट संपर्क</h2>
+
+      <div className="grid sm:grid-cols-3 gap-3">
+       <a
+        className="btn orange"
+        href={phoneUrl(COMPANY.companyMobile)}
+       >
+        कंपनी कॉल
+       </a>
+
+       <a
+        className="btn green"
+        href={whatsappUrl("नमस्कार, मला eGramsuvidha ची माहिती हवी आहे.")}
+        target="_blank"
+        rel="noopener noreferrer"
+       >
+        WhatsApp
+       </a>
+
+       <a
+        className="btn border"
+        href={phoneUrl(COMPANY.supportMobile)}
+       >
+        Support Call
+       </a>
+      </div>
+     </section>
+    </>
+   )}
+
+   {/* CATALOGUE */}
+   {page==="catalogue"&&(
+    <>
+     <h1 className="text-3xl font-bold mb-2">
+      eGramsuvidha सुविधा कॅटलॉग
+     </h1>
+
+     <p className="text-gray-600 mb-5">
+      प्रत्येक सुविधेची माहिती, डेमो आणि चौकशी.
+     </p>
+
+     {selected?(
+      <section className="card">
+       <button
+        type="button"
+        className="text-orange-700 mb-5 font-semibold"
+        onClick={()=>setSelected(null)}
+       >
+        ← सर्व सुविधा
+       </button>
+
+       <div className="module-icon mb-4">
+        {selected.icon}
+       </div>
+
+       <p className="text-sm text-orange-700 font-bold mb-2">
+        {selected.category}
+       </p>
+
+       <h2 className="text-2xl font-bold mb-4">
+        {selected.name}
+       </h2>
+
+       <p className="text-gray-600 mb-6">
+        {selected.desc}
+       </p>
+
+       <div className="flex flex-wrap gap-3">
+        <a
+         className="btn green"
+         href={whatsappUrl(
+          "नमस्कार, मला "+selected.name+
+          " या सुविधेबद्दल माहिती हवी आहे."
+         )}
+         target="_blank"
+         rel="noopener noreferrer"
+        >
+         WhatsApp चौकशी
+        </a>
+
+        <button
+         type="button"
+         className="btn orange"
+         onClick={()=>navigate("demo")}
+        >
+         डेमो बुक करा
+        </button>
+       </div>
+      </section>
+     ):(
+      <>
+       <input
+        className="field mb-4"
+        type="search"
+        aria-label="सुविधा शोधा"
+        placeholder="सुविधा शोधा..."
+        value={search}
+        onChange={e=>setSearch(e.target.value)}
+       />
+
+       <div className="flex gap-2 overflow-x-auto pb-4">
+        {categories.map(c=>(
+         <button
+          type="button"
+          key={c}
+          aria-pressed={category===c}
+          className={
+           "btn text-sm whitespace-nowrap "+
+           (category===c?"orange":"bg-white border")
+          }
+          onClick={()=>setCategory(c)}
+         >
+          {c}
+         </button>
+        ))}
+       </div>
+
+       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filtered.map(m=>(
+         <ModuleCard
+          key={m.id}
+          module={m}
+          onOpen={()=>openModule(m)}
+         />
+        ))}
+       </div>
+
+       {filtered.length===0&&(
+        <p className="text-gray-500 py-8">
+         या शोधासाठी सुविधा सापडली नाही.
+        </p>
+       )}
+      </>
+     )}
+    </>
+   )}
+
+   {/* ABOUT */}
+   {page==="about"&&(
+    <section className="card">
+     <h1 className="text-3xl font-bold mb-4">
+      आमच्याबद्दल
+     </h1>
+
+     <h2 className="text-xl font-bold text-orange-700">
+      {COMPANY.name}
+     </h2>
+
+     <p className="text-sm text-gray-500 mt-2 mb-5">
+      {COMPANY.tagline}
+     </p>
+
+     <p className="text-gray-700 mb-6">
+      {COMPANY.description}
+     </p>
+
+     <h2 className="text-xl font-bold text-green-700">
+      {COMPANY.product}
+     </h2>
+
+     <p className="text-gray-600 mt-2 mb-6">
+      {COMPANY.productTagline}
+     </p>
+
+     <div className="flex flex-wrap gap-3">
+      <a
+       className="btn orange"
+       href={COMPANY.companyWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       कंपनी वेबसाइट
+      </a>
+
+      <a
+       className="btn border"
+       href={COMPANY.productWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       eGramsuvidha वेबसाइट
+      </a>
+     </div>
+    </section>
+   )}
+
+   {/* DEMO FORM */}
+   {page==="demo"&&(
+    <section className="card max-w-xl mx-auto">
+     <h1 className="text-2xl font-bold mb-2">
+      डेमो बुक करा
+     </h1>
+
+     <p className="text-gray-600 mb-5">
+      माहिती भरल्यानंतर WhatsApp वर डेमो विनंती
+      तयार होईल. संदेश पाठवून विनंती पूर्ण करा.
+     </p>
+
+     <div className="space-y-3">
+      <input
+       className="field"
+       placeholder="पूर्ण नाव *"
+       aria-label="पूर्ण नाव"
+       autoComplete="name"
+       value={form.name}
+       onChange={e=>updateForm("name",e.target.value)}
+      />
+
+      <select
+       className="field"
+       aria-label="पदनाम"
+       value={form.designation}
+       onChange={e=>updateForm("designation",e.target.value)}
+      >
+       <option value="">पदनाम निवडा</option>
+       <option>ग्रामसेवक</option>
+       <option>ग्रामपंचायत अधिकारी</option>
+       <option>सरपंच</option>
+       <option>उपसरपंच</option>
+       <option>विस्तार अधिकारी</option>
+       <option>इतर</option>
+      </select>
+
+      <input
+       className="field"
+       placeholder="ग्रामपंचायत नाव *"
+       aria-label="ग्रामपंचायत नाव"
+       value={form.gp}
+       onChange={e=>updateForm("gp",e.target.value)}
+      />
+
+      <input
+       className="field"
+       placeholder="तालुका"
+       aria-label="तालुका"
+       value={form.taluka}
+       onChange={e=>updateForm("taluka",e.target.value)}
+      />
+
+      <input
+       className="field"
+       placeholder="जिल्हा"
+       aria-label="जिल्हा"
+       value={form.district}
+       onChange={e=>updateForm("district",e.target.value)}
+      />
+
+      <input
+       className="field"
+       type="tel"
+       inputMode="numeric"
+       maxLength="10"
+       placeholder="मोबाइल क्रमांक *"
+       aria-label="मोबाइल क्रमांक"
+       value={form.mobile}
+       onChange={e=>updateForm(
+        "mobile",
+        e.target.value.replace(/\D/g,"")
+       )}
+      />
+
+      <label className="block text-sm font-semibold">
+       डेमोसाठी पसंतीचा दिनांक
+       <input
+        className="field mt-2"
+        type="date"
+        min={localDate()}
+        value={form.date}
+        onChange={e=>updateForm("date",e.target.value)}
+       />
+      </label>
+
+      <textarea
+       className="field"
+       rows="3"
+       placeholder="तुमचा संदेश"
+       aria-label="तुमचा संदेश"
+       value={form.message}
+       onChange={e=>updateForm("message",e.target.value)}
+      />
+
+      <p className="text-xs text-gray-500">
+       पुढील बटणावर क्लिक केल्यास भरलेली माहिती
+       WhatsApp संदेशात समाविष्ट होईल. संदेश पाठवण्यापूर्वी
+       तपासा. ही वेबसाइट स्वतः माहिती डेटाबेसमध्ये साठवत नाही.
+      </p>
+
+      <button
+       type="button"
+       className="btn green w-full"
+       onClick={submitEnquiry}
+      >
+       WhatsApp वर डेमो विनंती पाठवा
+      </button>
+     </div>
+    </section>
+   )}
+
+   {/* CONTACT */}
+   {page==="contact"&&(
+    <section className="max-w-2xl mx-auto space-y-5">
+
+     <div className="card text-center">
+      <h1 className="text-2xl font-bold text-orange-700">
+       {COMPANY.name}
+      </h1>
+
+      <p className="text-xs text-gray-500 mt-2">
+       {COMPANY.tagline}
+      </p>
+
+      <h2 className="text-2xl font-bold text-green-700 mt-6">
+       {COMPANY.product}
+      </h2>
+
+      <p className="text-gray-500">
+       {COMPANY.productTagline}
+      </p>
+     </div>
+
+     <div className="card space-y-5">
+      <h2 className="section-title">कंपनी संपर्क माहिती</h2>
+
+      <div>
+       <p className="text-sm text-gray-500">
+        Company Calling & WhatsApp
+       </p>
+       <a
+        className="text-lg font-bold text-orange-700"
+        href={phoneUrl(COMPANY.companyMobile)}
+       >
+        +91 {COMPANY.companyMobile}
+       </a>
+      </div>
+
+      <div>
+       <p className="text-sm text-gray-500">
+        Customer Support Calling
+       </p>
+       <a
+        className="text-lg font-bold text-green-700"
+        href={phoneUrl(COMPANY.supportMobile)}
+       >
+        +91 {COMPANY.supportMobile}
+       </a>
+      </div>
+
+      <div>
+       <p className="text-sm text-gray-500">Email</p>
+       <a
+        className="text-blue-700 break-all"
+        href={"mailto:"+COMPANY.email}
+       >
+        {COMPANY.email}
+       </a>
+      </div>
+
+      {COMPANY.address&&(
+       <div>
+        <p className="text-sm text-gray-500">कार्यालयाचा पत्ता</p>
+        <p>{COMPANY.address}</p>
+       </div>
+      )}
+     </div>
+
+     <div className="card space-y-4">
+      <h2 className="section-title">अधिकृत वेबसाइट</h2>
+
+      <a
+       className="block text-blue-700 break-all"
+       href={COMPANY.companyWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       www.spdiginova.com
+      </a>
+
+      <a
+       className="block text-blue-700 break-all"
+       href={COMPANY.productWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       www.egramsuvidha.com
+      </a>
+
+      <a
+       className="btn orange w-full"
+       href={COMPANY.loginUrl}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       eGramsuvidha Login / Demo
+      </a>
+     </div>
+
+     <div className="card">
+      <h2 className="section-title">थेट संपर्क करा</h2>
+
+      <div className="grid sm:grid-cols-2 gap-3">
+       <a
+        className="btn orange"
+        href={phoneUrl(COMPANY.companyMobile)}
+       >
+        Call Company
+       </a>
+
+       <a
+        className="btn border"
+        href={phoneUrl(COMPANY.supportMobile)}
+       >
+        Call Support
+       </a>
+
+       <a
+        className="btn green"
+        href={whatsappUrl(
+         "नमस्कार, मला eGramsuvidha ची माहिती हवी आहे."
+        )}
+        target="_blank"
+        rel="noopener noreferrer"
+       >
+        WhatsApp
+       </a>
+
+       <a
+        className="btn border"
+        href={"mailto:"+COMPANY.email}
+       >
+        Send Email
+       </a>
+      </div>
+     </div>
+    </section>
+   )}
+
+   {/* DIGITAL CARD */}
+   {page==="share"&&(
+    <section className="card max-w-xl mx-auto text-center">
+     <h1 className="text-2xl font-bold mb-4">
+      Digital Business Card
+     </h1>
+
+     <h2 className="text-2xl font-extrabold text-green-700">
+      {COMPANY.product}
+     </h2>
+
+     <p className="text-gray-600 mt-2">
+      {COMPANY.name}
+     </p>
+
+     <p className="text-sm text-gray-500 mt-1 mb-5">
+      {COMPANY.productTagline}
+     </p>
+
+     <img
+      src={qrUrl}
+      alt="डिजिटल कॅटलॉग QR Code"
+      width="192"
+      height="192"
+      className="mx-auto mb-4"
+     />
+
+     <p className="text-sm text-gray-500 mb-6">
+      QR स्कॅन करून डिजिटल कॅटलॉग उघडा.
+     </p>
+
+     <div className="grid sm:grid-cols-2 gap-3">
+      <button
+       type="button"
+       className="btn orange"
+       onClick={share}
+      >
+       कॅटलॉग शेअर करा
+      </button>
+
+      <button
+       type="button"
+       className="btn border"
+       onClick={downloadVCard}
+      >
+       संपर्क सेव्ह करा
+      </button>
+
+      <a
+       className="btn green"
+       href={whatsappUrl(
+        "eGramsuvidha Digital Catalogue:\n"+catalogueUrl
+       )}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       WhatsApp Share
+      </a>
+
+      <a
+       className="btn border"
+       href={phoneUrl(COMPANY.companyMobile)}
+      >
+       Call Company
+      </a>
+     </div>
+    </section>
+   )}
+
+  </main>
+
+  {/* FOOTER */}
+  <footer className="bg-slate-900 text-white px-5 py-8">
+   <div className="max-w-6xl mx-auto">
+
+    <h2 className="text-xl font-bold">
+     {COMPANY.name}
+    </h2>
+
+    <p className="text-xs text-gray-400 mt-1">
+     {COMPANY.tagline}
+    </p>
+
+    <div className="mt-5">
+     <h3 className="text-lg font-bold text-orange-400">
+      {COMPANY.product}
+     </h3>
+
+     <p className="text-sm text-gray-300">
+      {COMPANY.productTagline}
+     </p>
+    </div>
+
+    <div className="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+     <div>
+      <p className="text-gray-400">Company Website</p>
+      <a
+       href={COMPANY.companyWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       www.spdiginova.com
+      </a>
+     </div>
+
+     <div>
+      <p className="text-gray-400">Product Website</p>
+      <a
+       href={COMPANY.productWebsite}
+       target="_blank"
+       rel="noopener noreferrer"
+      >
+       www.egramsuvidha.com
+      </a>
+     </div>
+
+     <div>
+      <p className="text-gray-400">Company & WhatsApp</p>
+      <a href={phoneUrl(COMPANY.companyMobile)}>
+       +91 {COMPANY.companyMobile}
+      </a>
+     </div>
+
+     <div>
+      <p className="text-gray-400">Customer Support</p>
+      <a href={phoneUrl(COMPANY.supportMobile)}>
+       +91 {COMPANY.supportMobile}
+      </a>
+     </div>
+
+     <div>
+      <p className="text-gray-400">Email</p>
+      <a href={"mailto:"+COMPANY.email}>
+       {COMPANY.email}
+      </a>
+     </div>
+    </div>
+
+    <div className="border-t border-gray-700 mt-7 pt-5 text-xs text-gray-400 text-center">
+     © {new Date().getFullYear()} {COMPANY.name}
+     <p className="mt-1">All Rights Reserved.</p>
+    </div>
+   </div>
+  </footer>
+
+  {/* MOBILE NAVIGATION */}
+  <nav
+   className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-30"
+   aria-label="मोबाइल नेव्हिगेशन"
+  >
+   <div className="max-w-3xl mx-auto flex justify-around p-2">
+    {[
+     ["home","⌂","मुख्य"],
+     ["catalogue","▦","सुविधा"],
+     ["demo","▣","डेमो"],
+     ["contact","☎","संपर्क"],
+     ["share","↗","शेअर"]
+    ].map(([id,icon,label])=>(
+     <button
+      type="button"
+      key={id}
+      onClick={()=>navigate(id)}
+      aria-current={page===id?"page":undefined}
+      className={
+       "text-center px-2 "+
+       (page===id?"text-orange-600":"text-gray-600")
+      }
+     >
+      <div className="text-xl" aria-hidden="true">
+       {icon}
+      </div>
+      <div className="text-xs">{label}</div>
+     </button>
+    ))}
+   </div>
+  </nav>
+
+ </div>
+ );
+}
+
+ReactDOM.createRoot(
+ document.getElementById("root")
+).render(<App/>);
+</script>
+</body>
+</html>
+
